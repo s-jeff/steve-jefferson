@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Untitled</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+
+  <!-- css main -->
+  <link rel="stylesheet" href="../../assets/css/styles.min.css">
+
+</head>
+
+<body>
+  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Project</h2>
+        <ol>
+          <li><a href="/index.html" target="_parent">Home</a></li>
+          <li>Project</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- End Breadcrumbs -->
+
+  <section class="article-clean">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+          <div class="intro">
+            <h1 class="text-center">SoundCloud Downloader</h1>
+            <p class="text-center"><span class="by">by</span> <a href="#">Steve Jefferson</a><span class="date">Sept
+                8th, 2016 </span></p>
+            <!-- <img class="img-fluid" src="assets\img\portfolio-details-2.jpg"> -->
+          </div>
+
+
+          <div class="text">
+            <h2 id="summary">Summary</h2>
+            <p>SoundCloud is an online audio distribution platform and music sharing website based in Berlin, Germany,
+              that enables its users to upload, promote, and share audio, as well as a DSP enabling listeners to stream
+              audio. Started in 2007 by Alexander Ljung and Eric Wahlforss, SoundCloud has grown to be one of the
+              largest music streaming services reaching over 175 million monthly users worldwide.SoundCloud offers both
+              free and paid membership on the platform, available for desktop and mobile devices.</p>
+            <p>SoundCloud has influenced the music industry through the success of many artists who have used the
+              service to launch or advance their careers. SoundCloud has received support from many investors and other
+              media platforms such as Twitter, although the streaming platform itself has unsolved funding issues and
+              has dismissed many employees in order to remain profitable.</p>
+            <p>Soundcloud Downloader integrates into this platform to provide a cli based option of directly downloading
+              music from this site. This interface also integrates albumart into the mucic whenever it is present</p>
+
+            <div markdown="0" style="text-align: center;">
+              <a href="https://github.com/carnife-x/Cloud-OCR-Reader" class="btn"><img
+                  src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Github"
+                  style="height: 50px; width: 50px;"></a>
+            </div>
+
+            <h2 id="features">Features</h2>
+            <ul>
+              <li>Automatic music download with only url as an input</li>
+              <li>Merges albumart into music and gives you options to save it separately</li>
+            </ul>
+
+              <div class="image-container" id="lightgallery">
+                <div
+                  data-src="https://raw.githubusercontent.com/carnife-x/soundcloud-downloader/main/bin/how_to_soundcloud.gif"
+                  data-sub-html="<h4>Flow Diagram</h4><p>Flow diagram detailing the working of the OCR</p>"
+                  data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                  <a href="">
+                    <img class="img-fluid"
+                      src="https://raw.githubusercontent.com/carnife-x/soundcloud-downloader/main/bin/how_to_soundcloud.gif"
+                      alt="Thumb-1">
+                  </a>
+                </div>
+              </div>
+
+
+
+
+
+              <h2>License</h2>
+              <p>This project was developed by Steve Jefferson and is released under the MIT License.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <script src="assets\vendor\jquery\jquery.min.js"></script> -->
+  <!-- <script src="assets\vendor\bootstrap\js\bootstrap.min.js"></script> -->
+  <!-- <script src="assets/vendor/lightgallery/lightgallery.js"></script> -->
+  <!-- <script src="assets/vendor/lightgallery/lightgallery.umd.js"></script> -->
+
+  <!-- <script src="assets/js/blogs.js"></script> -->
+
+  <!-- lightgallery plugins -->
+  <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+  <script src="../../assets/vendor/lightgallery/js/components/lg-rotate.min.js"></script>
+
+  <script>
+    // lightGallery(document.getElementById('lightgallery'));
+
+    var buttons = document.getElementsByClassName("image-container");
+    for (var i = 0; i < buttons.length; i++) {
+      console.log(buttons[i])
+      lightGallery(buttons[i]);
+    }
+  </script>
+
+
+</body>
+
+</html>

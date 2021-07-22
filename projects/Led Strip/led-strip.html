@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Untitled</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">
+  <link href="../../assets/vendor/prizm/prism.css" rel="stylesheet">
+
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+
+  <!-- css main -->
+  <link rel="stylesheet" href="../../assets/css/styles.min.css">
+
+</head>
+
+<body>
+  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Projects</h2>
+        <ol>
+          <li><a href="/index.html" target="_parent">Home</a></li>
+
+          <li>Projects</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- End Breadcrumbs -->
+
+  <section class="article-clean">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+          <div class="intro">
+            <h1 class="text-center">Audio Reactive LED Strip</h1>
+            <p class="text-center"><span class="by">by</span> <a href="#">Steve Jefferson</a><span class="date">Sept
+                8th, 2016 </span></p>
+            <!-- <img class="img-fluid" src="assets\img\portfolio-details-2.jpg"> -->
+          </div>
+          <div class="text">
+            <p>LED strip music visualization using Python and the ESP8266 module.</p>
+            <!-- <div markdown="0" style="text-align: center;">
+                      <img src="block-diagram.png" alt="block diagram" /><p class="caption">block diagram</p>
+
+                      <img src="demo.gif" alt="visualizer demo" /><p class="caption">visualizer demo</p>
+                    </div> -->
+            <div class="image-container" id="lightgallery" style="text-align: center;">
+              <div data-src="icon.gif"
+                data-sub-html="<h4>Flow Diagram</h4><p>Flow diagram detailing the working of the OCR</p>"
+                data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                <a href="">
+                  <img class="img-fluid" src="demo.gif" alt="Thumb-1">
+                </a>
+              </div>
+
+              <br>
+
+              <div data-src="block-diagram.png"
+                data-sub-html="<h4>Flow Diagram</h4><p>Flow diagram detailing the working of the OCR</p>"
+                data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                <a href="">
+                  <img class="img-fluid" src="block-diagram.png" alt="Thumb-1">
+                </a>
+              </div>
+            </div>
+            <h2 id="summary">Overview</h1>
+              <p>The guide includes everything needed to build an LED strip music visualizer (excluding hardware):
+              </p>
+              <ul>
+                <li>Python visualization code, which includes code for:</li>
+                <li>Recording audio with a microphone (<a
+                    href="https://github.com/carnife-x/Reactive-Led-Strip_Arduino/blob/master/python/microphone.py">microphone.py</a>)
+                </li>
+                <li>Digital signal processing (<a
+                    href="https://github.com/carnife-x/Reactive-Led-Strip_Arduino/blob/master/python/dsp.py">dsp.py</a>)
+                </li>
+                <li>Constructing 1D visualizations (<a
+                    href="https://github.com/carnife-x/Reactive-Led-Strip_Arduino/blob/master/python/visualization.py">visualization.py</a>)
+                </li>
+                <li>Sending pixel information to the ESP8266 over WiFi (<a
+                    href="https://github.com/carnife-x/Reactive-Led-Strip_Arduino/blob/master/python/led.py">led.py</a>)
+                </li>
+                <li>Configuration and settings (<a
+                    href="https://github.com/carnife-x/Reactive-Led-Strip_Arduino/blob/master/python/config.py">config.py</a>)
+                </li>
+                <li>Arduino firmware for the ESP8266 (<a
+                    href="https://github.com/carnife-x/Reactive-Led-Strip_Arduino/blob/master/NodeMCU/ws2812_controller_esp8266.ino">ws2812_controller_esp8266.ino</a>)
+                </li>
+              </ul>
+
+              <!-- <div markdown="0" style="text-align: center;">
+                      <a href="https://github.com/carnife-x/Cloud-OCR-Reader" class="btn"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Github" style="height: 50px; width: 50px;"></a>
+                      </div> -->
+
+              <h2 id="computer-esp8266">Computer + ESP8266</h2>
+              <p>To build a visualizer using a computer and ESP8266, you will need: - Computer with Python 2.7 or 3.5
+                (<a href="https://www.anaconda.com/distribution/">Anaconda</a> is recommended on Windows) - ESP8266
+                module with RX1 pin exposed. These modules can be purchased for as little as $5 USD. These modules are
+                known to be compatible, but many others will work too: - NodeMCU v3 - Adafruit HUZZAH - Adafruit Feather
+                HUZZAH - WS2812B LED strip (such as Adafruit Neopixels). These can be purchased for as little as $5-15
+                USD per meter. - 5V power supply - 3.3V-5V level shifter (optional, must be non-inverting)</p>
+              <p>Limitations when using a computer + ESP8266: - The communication protocol between the computer and
+                ESP8266 currently supports a maximum of 256 LEDs.</p>
+              <h1 style="font-size: x-large;"><b>Installation for Computer + ESP8266</b></h1>
+              <h2 id="python-dependencies">Python Dependencies</h2>
+              <p>Visualization code is compatible with Python 2.7 or 3.5. A few Python dependencies must also be
+                installed: - Numpy - Scipy (for digital signal processing) - PyQtGraph (for GUI visualization) - PyAudio
+                (for recording audio with microphone)</p>
+              <p>On Windows machines, the use of <a href="https://www.anaconda.com/distribution/">Anaconda</a> is
+                <strong>highly recommended</strong>. Anaconda simplifies the installation of Python dependencies, which
+                is sometimes difficult on Windows.</p>
+              <h2 id="installing-python-dependencies">Installing python dependencies</h2>
+              <p>The pip package manager can also be used to install the python dependencies.</p>
+              <pre data-src="prism.js" class="language-bash" data-src-status="loaded" tabindex="0" >
+                <code class="language-bash" class=" language-bash">                
+pip install numpy
+pip install scipy
+pip install pyqtgraph                      
+pip install pipwin
+pipwin install pyaudio
+                </code>
+              </pre>
+              <p>If <code class="language-bash">pip</code> is not found try using <code class="language-bash">python -m pip install</code> instead.</p>
+              <p>Running the visualization can be done using the command below.</p>
+              <p><code class="language-bash">python3 visualization.py /tmp</code></p>
+              <h2 id="arduino-dependencies">Arduino dependencies</h2>
+              <p>ESP8266 firmare is uploaded using the Arduino IDE. See <a
+                  href="https://learn.sparkfun.com/tutorials/esp8266-thing-hookup-guide/installing-the-esp8266-arduino-addon">this
+                  tutorial</a> to setup the Arduino IDE for ESP8266.</p>
+              <h2 id="install-neopixelbus-library">Install NeoPixelBus library</h2>
+              <p><a href="https://github.com/Makuna/NeoPixelBus">Download Here</a> or using library manager, search for
+                &quot;NeoPixelBus&quot;.</p>
+
+              <h2 id="hardware-connections">Hardware Connections</h2>
+              <h3 style="font-size: medium; font-weight: bold;">ESP8266</h3>
+              <p>The ESP8266 has hardware support for <a href="https://en.wikipedia.org/wiki/I%C2%B2S">I²S</a> and this
+                peripheral is used
+                <!-- by the [ws2812b i2s library](https://github.com/JoDaNl/esp8266_ws2812_i2s)  -->to control the
+                ws2812b LED strip. This significantly improves performance compared to bit-banging the IO pin.
+                Unfortunately, this means that the LED strip <strong>must</strong> be connected to the RX1 pin, which is
+                not accessible in some ESP8266 modules (such as the ESP-01).
+              </p>
+              <p>The RX1 pin on the ESP8266 module should be connected to the data input pin of the ws2812b LED strip
+                (often labelled DIN or D0).</p>
+              <p>For the NodeMCU v3 , the location of the RX1 pin is shown in the images below. Many other modules also
+                expose the RX1 pin.</p>
+
+              <div class="figure" style="margin: auto;text-align: center;">
+                <img src="https://i.pinimg.com/originals/63/98/0d/63980d744b8d999885a63687bf1ee3b2.png"
+                  alt="nodemcu-pinout" />
+                <p class="caption">nodemcu-pinout</p>
+              </div>
+              
+              <h2 id="setup-and-configuration">Setup and Configuration</h2>
+              <ol style="list-style-type: decimal">
+                <li>Install Python and Python dependencies</li>
+                <li><a
+                    href="https://learn.sparkfun.com/tutorials/esp8266-thing-hookup-guide/installing-the-esp8266-arduino-addon">Install
+                    Arduino IDE and ESP8266 addon</a></li>
+                <li>Download and extract all of the files in this repository onto your computer</li>
+                <li>Connect the RX1 pin of your ESP8266 module to the data input pin of the ws2812b LED strip. Ensure
+                  that your LED strip is properly connected to a 5V power supply and that the ESP8266 and LED strip
+                  share a common electrical ground connection.</li>
+                <li>In <a href="arduino/ws2812_controller/ws2812_controller.ino">ws2812_controller.ino</a>:</li>
+              </ol>
+              <ul>
+                <li>Set <code class="language-bash">const char* ssid</code> to your router's SSID</li>
+                <li>Set <code class="language-bash">const char* password</code> to your router's password</li>
+                <li>Set <code class="language-bash">IPAddress gateway</code> to match your router's gateway</li>
+                <li>Set <code class="language-bash">IPAddress ip</code> to the IP address that you would like your ESP8266 to use (your
+                  choice)</li>
+                <li>Set <code class="language-bash">#define NUM_LEDS</code> to the number of LEDs in your LED strip</li>
+              </ul>
+              <ol start="6" style="list-style-type: decimal">
+                <li>Upload the <a href="arduino/ws2812_controller/ws2812_controller.ino">ws2812_controller.ino</a>
+                  firmware to the ESP8266. Ensure that you have selected the correct ESP8266 board from the boards menu.
+                  In the dropdown menu, set <code class="language-bash">CPU Frequency</code> to 160 MHz for optimal performance.</li>
+                <li>In <a href="python/config.py">config.py</a>:</li>
+              </ol>
+              <ul>
+                <li>Set <code class="language-bash">N_PIXELS</code> to the number of LEDs in your LED strip (must match <code class="language-bash">NUM_LEDS</code>
+                  in <a href="arduino/ws2812_controller/ws2812_controller.ino">ws2812_controller.ino</a>)</li>
+                <li>Set <code class="language-bash">UDP_IP</code> to the IP address of your ESP8266 (must match <code class="language-bash">ip</code> in <a
+                    href="arduino/ws2812_controller/ws2812_controller.ino">ws2812_controller.ino</a>)</li>
+                <li>If needed, set <code class="language-bash">MIC_RATE</code> to your microphone sampling rate in Hz. Most of the time you
+                  will not need to change this.</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <script src="assets\vendor\jquery\jquery.min.js"></script> -->
+  <!-- <script src="assets\vendor\bootstrap\js\bootstrap.min.js"></script> -->
+  <!-- <script src="assets/vendor/lightgallery/lightgallery.js"></script> -->
+  <script src="../../assets/vendor/prizm/prism.js"></script>
+
+  <!-- <script src="assets/js/blogs.js"></script> -->
+
+  <!-- lightgallery plugins -->
+  <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+  <script src="../../assets/vendor/lightgallery/js/components/lg-rotate.min.js"></script>
+
+  <script>
+    // lightGallery(document.getElementById('lightgallery'));
+
+    var buttons = document.getElementsByClassName("image-container");
+    for (var i = 0; i < buttons.length; i++) {
+      console.log(buttons[i])
+      lightGallery(buttons[i]);
+    }
+  </script>
+
+
+</body>
+
+</html>

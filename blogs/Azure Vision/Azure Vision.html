@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Azure Vision OCR Implementation</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">
+  <link href="../../assets/vendor/prizm/prism.css" rel="stylesheet">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+
+  <!-- css main -->
+  <link rel="stylesheet" href="../../assets/css/styles.min.css">
+
+</head>
+
+<body>
+  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Blog</h2>
+        <ol>
+          <li><a href="/index.html" target="_parent">Home</a></li>
+          <li>Blog</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- End Breadcrumbs -->
+
+  <section class="article-clean">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+          <div class="intro">
+
+            <h1 class="text-center">Implementing Azure Vision OCR</h1>
+            <p class="text-center"><span class="by">by</span> <a href="#">Steve Jefferson</a><span class="date">Sept
+                8th, 2016 </span></p>
+            <!-- <img class="img-fluid" src="assets\img\portfolio-details-2.jpg"> -->
+          </div>
+          <div class="text">
+            <p>
+              <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/overview">Azure
+                Computer Vision</a> includes Optical Character Recognition (OCR) capabilities. You can use the Read API
+              to
+              extract
+              printed and handwritten text from images and documents. It uses deep learning based models and works with
+              text on a
+              variety of surfaces and backgrounds. These include business documents, invoices, receipts, posters,
+              business cards,
+              letters, and whiteboards. The OCR APIs support extracting printed text in several languages. Follow a
+              quickstart to
+              get started.
+            </p>
+
+            <h2 id="azure-configuration">Azure configuration</h2>
+            <ol style="list-style-type: decimal">
+              <li><a
+                  href="https://azure.microsoft.com/auth/signin/?loginProvider=Microsoft&amp;redirectUri=%2Fen-in%2Ffree%2F">Register</a>
+                for an account in Microsoft Azure Cloud Platform, The Azure free account includes access to several
+                Azure
+                products that are free for 12 months.</li>
+              <li><a
+                  href="https://portal.azure.com/#blade/HubsExtension/BrowseResource/resourceType/Microsoft.CognitiveServices%2Faccounts">Create</a>
+                a Cognitive Services resource.</li>
+              <li>Make note of the Api Key and the endpoints which are located under &quot;Keys and Endpoint&quot;</li>
+            </ol>
+            <h2 id="demo">Demo</h2>
+
+            <div class="image-container" id="lightgallery">
+              <div class="half" data-src="sign.jpg">
+                <a href="">
+                  <img class="img-fluid" src="sign.jpg" alt="Thumb-1">
+                </a>
+              </div>
+
+              <div class="half" data-src="modified-sign.jpg" data-pinterest-text="Pin it1"
+                data-tweet-text="share on twitter 1">
+                <a href="">
+                  <img class="img-fluid" src="modified-sign.jpg" alt="Thumb-1">
+                </a>
+              </div>
+            </div>
+
+            <h2 id="code-breakdown">Code Breakdown</h2>
+            <h3 id="importing-required-libraries">Importing required libraries</h3>
+
+            <pre> <code class="language-python">
+import os
+import json
+import time
+from requests import get,post
+            </code></pre>
+            <h3 id="setting-global-variables">Setting Global Variables</h3>
+            <pre> <code class="language-python">
+dir=os.getcwd() 
+API_KEY = '&lt;&lt; YOURAPIKEY &gt;&gt;' 
+            </code></pre>
+
+            <h3 id="image-handler">Image Handler</h3>
+
+
+            <p>
+            <pre><code class="language-python">
+def handler(pathToImage):
+    ENDPOINT = 'https://iit-ocr.cognitiveservices.azure.com/vision/v3.1/read/analyze'
+    #DIR = os.getcwd()
+
+    #pathToImage = '{0}/{1}'.format(DIR, pathToImage) 
+    print('Processing: ' + pathToImage)
+    headers  = {
+        'Ocp-Apim-Subscription-Key': API_KEY,
+        'Content-Type': 'application/octet-stream'
+    }
+    body    = {
+        'language': 'en',
+    }
+    payload = open(pathToImage, 'rb').read()
+    response = post(ENDPOINT, headers=headers, json = body, data=payload)
+    get_url=response.headers['Operation-Location']
+
+    return get_endpoint(get_url)
+          </code></pre>
+            </p>
+
+
+            <h3 id="geting-asyncronous-endpoint">Geting Asyncronous Endpoint</h3>
+
+            <pre><code class="language-python">
+def get_endpoint(end_url):
+    n_tries = 15
+    n_try = 0
+    wait_sec = 5
+    max_wait_sec = 60
+    while n_try < n_tries:
+        try:
+            print(n_try,wait_sec)
+            resp = get(url = end_url, headers = {"Ocp-Apim-Subscription-Key": API_KEY})
+            resp_json = resp.json()
+            if resp.status_code != 200:
+                print("GET analyze results failed:\n%s" % json.dumps(resp_json))
+    
+            status = resp_json["status"]
+            if status == "succeeded":
+                print("Analysis succeeded:\n")
+                return str(resp_json)
+    
+                n_try = n_tries
+            if status == "failed":
+                return("Analysis failed:\n%s" % json.dumps(resp_json))
+    
+            # Analysis still running. Wait and retry.
+            time.sleep(wait_sec)
+            n_try += 1
+            wait_sec = min(2*wait_sec, max_wait_sec)     
+        except Exception as e:
+            msg = "GET analyze results failed:\n%s" % str(e)
+            return(msg)
+
+            </code></pre>
+
+
+            <h3 id="extracting-text-from-response">Extracting Text From Response</h3>
+            <pre><code class="language-python">
+
+def parse_text(results):
+    text = ''
+    dic=results['analyzeResult']['readResults']
+    
+    for part in dic:
+        for line in part['lines']:
+            for word in line['words']:
+                text += word['text'] + ' '
+            text += '\n'
+    return (text)
+
+            </code></pre>
+
+
+
+            <h3 id="visualisation-code">Visualisation Code</h3>
+
+            <pre><code class="language-python">
+  
+def plot_rectangle(orig,x1,y1,confidence):
+    if confidence>0.9:
+        col=(0, 255, 0)
+    elif confidence>0.7:
+        col=(0, 255, 0)
+    else:
+        col=(0, 0, 255)
+    mod = cv2.rectangle(orig, x1, y1, col, 5)
+    return mod
+
+def plot(json_file):
+    alpha = 0.4
+    img_file = 'sign.jpg'
+    orig = cv2.imread(img_file)
+    copy=orig.copy()
+    flag=0
+
+  temp = json_file['analyzeResult']['readResults'][0]['lines']
+
+
+    for line in temp:
+        for box in line['words']:
+            arr=box['boundingBox']
+            confidence=box['confidence']
+            orig=plot_rectangle(orig,(arr[2],arr[1]),(arr[6],arr[5]),confidence)
+            print((arr[2],arr[1]),(arr[6],arr[5]),confidence)
+
+
+
+    mode = cv2.addWeighted(orig, alpha, copy, 1 - alpha,0)
+    cv2.imshow('image', cv2.resize(mode, (1360, 768)))
+    cv2.waitKey(0)
+  </code></pre>
+            <h3 id="write-to-file">Write to file</h3>
+            <pre><code class="language-python">
+              
+def write_file(get_data,filename):
+    filename=os.path.join('docs',filename)
+    f = open(filename, "w")
+    f.write(get_data)
+    f.close()
+              </code></pre>
+
+            <h3 id="integrating-all-the-components">Integrating all the components</h3>
+            <pre><code class="language-python">
+handler(os.path.join(dir,path))
+plot(get_data)
+write_file(get_data,os.path.join(dir, 'jsondic.py'))
+              
+</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <script src="assets\vendor\jquery\jquery.min.js"></script> -->
+  <!-- <script src="assets\vendor\bootstrap\js\bootstrap.min.js"></script> -->
+  <script src="../../assets/js/blogs.js"></script>
+
+
+  <script src="../../assets/vendor/prizm/prism.js"></script>
+
+
+  <!-- lightgallery plugins -->
+  <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+  <script src="../../assets/vendor/lightgallery/js/components/lg-rotate.min.js"></script>
+
+  <script>
+    // lightGallery(document.getElementById('lightgallery'));
+
+    var buttons = document.getElementsByClassName("image-container");
+    for (var i = 0; i < buttons.length; i++) {
+      console.log(buttons[i])
+      lightGallery(buttons[i]);
+    }
+  </script>
+
+
+</body>
+
+</html>

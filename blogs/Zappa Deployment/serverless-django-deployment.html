@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Untitled</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">
+  <link href="../../assets/vendor/prizm/prism.css" rel="stylesheet">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+
+  <!-- css main -->
+  <link rel="stylesheet" href="../../assets/css/styles.min.css">
+
+</head>
+
+<body>
+  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Project</h2>
+        <ol>
+          <li><a href="/index.html" target="_parent">Home</a></li>
+          <li>Project</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- End Breadcrumbs -->
+
+  <section class="article-clean">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+          <div class="intro">
+            <h1 class="text-center">Deploying serverless Django applications</h1>
+            <p class="text-center"><span class="by">by</span> <a href="#">Steve Jefferson</a><span class="date">Sept
+                8th, 2016 </span></p>
+            <!-- <img class="img-fluid" src="assets\img\portfolio-details-2.jpg"> -->
+          </div>
+          <div class="text">
+            <p>Zappa makes it super easy to build and deploy server-less, event-driven Python applications (including,
+              but not
+              limited to, WSGI web apps) on AWS Lambda + API Gateway. Think of it as &quot;serverless&quot; web hosting
+              for your
+              Python apps. That means infinite scaling, zero downtime, zero maintenance - and at a fraction of the cost
+              of your
+              current deployments</p>
+            <h2 id="setting-up-a-virtual-environment">Setting up a Virtual Environment</h2>
+            <p>Zappa requires a Virtual Evironment to package the required python libraries into the S3 storage. to set
+              up your
+              virtual environment run the following commands.</p>
+            <pre><code class="language-bash">mkdir venv
+cd venv
+virtualenv env
+source env/bin/activate
+pip install django zappa
+</code></pre>
+
+            <h2 id="djagno-configuration">Djagno Configuration</h2>
+            <ol style="list-style-type: decimal">
+              <li>Create your Django application, or navigate to an existing Django application on your system.</li>
+              <li>Install the packages listed in the requirments.txt file into your virtual environment.</li>
+              <li>Opend an elevated command prompt inside the project you want to deploy.</li>
+            </ol>
+
+            <h2 id="aws-configuration">AWS configuration</h2>
+            <ol style="list-style-type: decimal">
+              <li><a href="https://portal.aws.amazon.com/billing/signup#/start">Register</a> for an AWS account,AWS
+                Accounts Include
+                12 Months of Free Tier Access.</li>
+              <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html">Download</a> and
+                setup the
+                AWS cli.</li>
+              <li>Create an IAM User with the <a
+                  href="https://www.codingforentrepreneurs.com/blog/aws-iam-user-role-policies-zappa-serverless-python">required</a>
+                policies for the lambda function.</li>
+              <li>Login to your AWS account through the cli.</li>
+            </ol>
+
+
+            <h2 id="zappa-configuration">Zappa Configuration</h2>
+            <ol style="list-style-type: decimal">
+
+              <li>Make sure your virtual environment is active and run</li>
+
+              <pre><code class="language-bash">Zappa init</code></pre>
+
+              <p>you should get this message:</p>
+
+              <pre><code class="language-bash">          
+  ███████╗ █████╗ ██████╗ ██████╗  █████╗
+  ╚══███╔╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+    ███╔╝ ███████║██████╔╝██████╔╝███████║
+   ███╔╝  ██╔══██║██╔═══╝ ██╔═══╝ ██╔══██║
+  ███████╗██║  ██║██║     ██║     ██║  ██║
+  ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝     ╚═╝  ╚═╝
+  Welcome to Zappa!
+  Zappa is a system for running server-less Python web applications on AWS Lambda and AWS API Gateway.
+  This `init` command will help you create and configure your new Zappa deployment.
+  Let&#39;s get started!
+            </code></pre>
+              <li>
+                <p>Zappa asks you to define which env you want to configure, as it’s able to handle multiple envs. stick
+                  with the
+                  default ‘dev’.</p>
+              </li>
+
+              <pre><code class="language-markdown">Your Zappa configuration can support multiple production stages, like &#39;dev&#39;, &#39;staging&#39;, and &#39;production&#39;.
+What do you want to call this environment (default &#39;dev&#39;):
+</code></pre>
+
+              <li>
+                <p>After that, it will read the AWS Credentials file and read all the available profiles. We should have
+                  only
+                  ‘default’ at the moment, so just press enter to confirm</p>
+<pre><code class="language-markdown">AWS Lambda and API Gateway are only available in certain regions. Let&#39;s check to make sure you have a profile set up in one that will work.
+We found the following profiles: default. Which would you like us to use? (default &#39;default&#39;):</code></pre>
+              </li>
+              <li>
+                <p>Zappa needs an S3 bucket to push your app. You can use an existing bucket or let Zappa generate one
+                  for you. Type
+                  the name of the bucket you want to use or press Enter to let Zappa automatically generate a bucket.
+                </p>
+<pre><code class="language-markdown" >Your Zappa deployments will need to be uploaded to a private S3 bucket.
+If you don&#39;t have a bucket yet, we&#39;ll create one for you too.
+What do you want call your bucket? (default &#39;zappa-koav28q4d&#39;):</code></pre>
+              </li>
+              <li>
+                <p>Zappa can recognize that our app is a Django project, quickening the init process. type in the
+                  location of the
+                  settings.py file(app_name.settings):</p>
+                <pre><code class="language-markdown">It looks like this is a Django application!
+What is the module path to your projects&#39;s Django settings?
+(This will likely be something like &#39;your_project.settings&#39;)
+Where are your project&#39;s settings?:</code></pre>
+              </li>
+              <li>
+                <p>You can optionally deploy to all available regions in order to provide fast global service, Or you
+                  can specify
+                  the aws region you want to deploy the application into.Type <code class="language-bash">n</code> and
+                  specify
+                  <code class="language-bash">ap-south-1</code> to
+                  deploy the application into the Mumbai server only.
+                </p>
+                <pre><code class="language-markdown">Would you like to deploy this application globally? (default &#39;n&#39;) [y/n/(p)rimary]:</code></pre>
+              </li>
+              <li>
+                <p>To deploy the application type:</p>
+                <pre><code class="language-bash">zappa deploy dev</code></pre>
+                <p>you should get the following output.</p>
+                <pre><code class="language-markdown">Calling deploy for stage dev..
+Creating zappatest-dev-ZappaLambdaExecutionRole IAM Role..
+Creating zappa-permissions policy on zappatest-dev-ZappaLambdaExecutionRole IAM Role.
+Downloading and installing dependencies..
+Packaging project as zip..
+Uploading zappatest-dev-1496245095.zip (11.0MiB)..
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 11.5M/11.5M [00:15&lt;00:00, 751KB/s]
+Scheduling..
+Scheduled zappatest-dev-zappa-keep-warm-handler.keep_warm_callback!
+Uploading zappatest-dev-template-1496245132.json (1.6KiB)..
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1.61K/1.61K [00:01&lt;00:00, 1.23KB/s]
+Waiting for stack zappatest-dev to create (this can take a bit)..
+75%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▎                                      | 3/4 [00:10&lt;00:05,  5.48s/res]
+Deploying API Gateway..
+Deployment complete!: https://yoururl.ap-south-1.amazonaws.com/dev</code></pre>
+              </li>
+              <li>
+                <p>Setup the Database by running the following commands.</p>
+                <pre><code class="language-bash">zappa manage dev migrate
+zappa manage dev s3_sqlite_vacuum
+zappa update dev</code></pre>
+              </li>
+              <li>
+                <p>You need to add the url that is generated by zappa into <code
+                    class="language-bash">ALLOWED_HOSTS</code> which is located
+                  in the the
+                  settings.py file.</p>
+                <pre><code class="language-bash">ALLOWED_HOSTS = [&#39;671unn74s3.execute-api.ap-south-1.amazonaws.com&#39;]</code></pre>
+
+              </li>
+              
+            </ol>
+            <p>update the application by running the command <code class="language-bash">zappa update dev</code>.
+              the application should
+              be live on
+              the url that is retuned.</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <script src="assets\vendor\jquery\jquery.min.js"></script> -->
+  <!-- <script src="assets\vendor\bootstrap\js\bootstrap.min.js"></script> -->
+  <!-- <script src="assets/vendor/lightgallery/lightgallery.js"></script> -->
+  <!-- <script src="assets/vendor/lightgallery/lightgallery.umd.js"></script> -->
+
+  <!-- <script src="assets/js/blogs.js"></script> -->
+  <script src="../../assets/vendor/prizm/prism.js"></script>
+
+  <!-- lightgallery plugins -->
+  <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+  <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+  <script src="../../assets/vendor/lightgallery/js/components/lg-rotate.min.js"></script>
+
+  <script>
+    // lightGallery(document.getElementById('lightgallery'));
+
+    var buttons = document.getElementsByClassName("image-container");
+    for (var i = 0; i < buttons.length; i++) {
+      console.log(buttons[i])
+      lightGallery(buttons[i]);
+    }
+  </script>
+
+
+</body>
+
+</html>

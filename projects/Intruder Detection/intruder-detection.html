@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+
+   <!-- Vendor CSS Files -->
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../assets/vendor/lightgallery/css/lightgallery.css" rel="stylesheet">
+  <link href="../../assets/vendor/prizm/prism.css" rel="stylesheet">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+
+  <!-- css main -->
+  <link rel="stylesheet" href="../../assets/css/styles.min.css">
+
+</head>
+
+<body>
+  <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Project</h2>
+            <ol>
+              <li><a href="/index.html" target="_parent">Home</a></li>
+              <li>Project</li>
+            </ol>
+          </div>
+  
+        </div>
+      </section>
+      
+      <!-- End Breadcrumbs -->
+
+    <section class="article-clean">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+                    <div class="intro">
+                        <h1 class="text-center">Intruder Detection with RaspberryPi and Node Red</h1>
+                        <p class="text-center"><span class="by">by</span> <a href="#">Steve Jefferson</a><span
+                                class="date">Sept 8th, 2016 </span></p>
+                                <!-- <img class="img-fluid" src="assets\img\portfolio-details-2.jpg"> -->
+                    </div>
+                    <div class="text">
+
+
+                      <div class="image-container" id="lightgallery">
+                        <div data-src="architecture.png" data-sub-html="<h4>Flow Diagram</h4><p>Flow diagram detailing the working of the OCR</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                          <a href="">
+                              <img class="img-fluid" src="architecture.png" alt="Thumb-1">
+                          </a>
+                        </div>
+                      </div>
+
+                      <p>Object detection model with Tensorflow.js, Deployed on RaspberryPi.</p>
+
+                      <h2>Flow</h2>
+                      <ol style="list-style-type: decimal">
+                        <li>The user owns or downloads a machine learning model in TensorFlow.js format.</li>
+                        <li>The user creates a Node-RED node for the TensorFlow.js model and wires the TensorFlow.js node in a Node-RED application.</li>
+                        <li>The user can deploy the Node-RED application locally.</li>
+                        <li>The user can access the Node-RED application from a browser and can trigger inferencing on images captured from a webcam.</li>
+                        <li>Alternatively, the user can deploy the Node-RED application to a Raspberry Pi.</li>
+                        <li>The device runs the Node-RED application and performs inferencing on images from a camera.</li>
+                        <li>The device can output to a connected speaker or take some other action depending on the inference results.</li>
+                        </ol>
+                      
+
+
+
+
+
+                        <h2 id="configuration">Configuration</h2>
+                        <ul>
+                            <li>
+                                <p>GIT</p>
+                                <code class="language-bash">sudo apt update
+                        sudo apt install git</code>
+                            </li>
+                            <br>
+                            <li>
+                              
+                                <p>NodeJS and NVM</p>
+                                <code class="language-bash">
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+nvm install node
+                              </code>
+                            </li>
+
+                            <br>
+                            <li>                              
+                                <p>Node packages</p>
+                                <pre><code class="language-bash">
+npm install /home/pi/app/node-red-tensorflowjs/node-red-contrib-tfjs-object-detection
+npm install node-red-contrib-browser-utils node-red-contrib-play-audio node-red-contrib-image-output
+npm install node-red-node-pi-gpio
+                      </code></pre>
+                            </li>
+
+                            <br>
+                            <li>                              
+                                <p>RaspberryPi Camera</p>
+                                <pre><code class="language-bash">npm install node-red-contrib-camerapi</code></pre>
+                            </li>
+
+                            <br>
+                            <li>
+                                <p>USB Webcam</p>
+                                <pre><code class="language-bash">
+npm install node-red-contrib-usbcamera
+sudo apt install fswebcam  
+                       </code></pre>
+                            </li>
+                            <br>
+                            <li>
+                                <p>Code</p>
+                                <pre><code class="language-bash">
+git clone https://github.com/IBM/node-red-tensorflowjs
+cd node-red-tensorflowjs
+npm start 
+                      </code></pre>
+                            </li>
+                        </ul>
+                        <h2 id="hardware-setup">Hardware Setup</h2>
+
+
+                            <li>Camera Configuration
+
+                        <ol style="list-style-type: decimal">
+                            <li>Open the Camera Port on the Raspberry Pi</li>
+                            <li>Insert the Camera Cable</li>
+                            <li>Test the connection with the command: <code class="language-bash">raspistill -o Desktop/image.jpg</code></li>
+                        </ol>
+                      </li>
+
+                            <li>Motion Sensor
+                        <ol style="list-style-type: decimal">
+                            <li>Connect the sensor to pin 8 (or any other GPIO pin)</li>
+                            <li>Power the sensor with the RaspberryPi 5v pin</li>
+                        </ol>
+                      </li>
+
+                        <h2 id="import-required-flows">Import required Flows</h2>
+                        <ol style="list-style-type: decimal">
+                            <li>Make sure Node-RED is running</li>
+                            <li>Open a browser and go to your Node-RED Editor</li>
+                            <li>Click on the Node-RED Menu</li>
+                            <li>Click on <em>Import</em></li>
+                            <li>Select the <em>Clipboard</em> tab</li>
+                            <li>Click on <em>select a file to import</em></li>
+                            <li>Browse to and select one of the flow files in the cloned repo
+                                <ul>
+                                    <li>If trying things out locally on your browser, then use the <code class="language-bash">browser-flow.json</code>.</li>
+                                    <li>If using a Raspberry Pi with peripherals, then use the <code class="language-bash">raspberrypi-flows.json</code>.</li>
+                                </ul>
+                            </li>
+                            <li>Select <em>Import to new flow</em></li>
+                            <li>Click <em>Import</em></li>
+                        </ol>
+                        <h2 id="deploy-and-run-on-a-raspberry-pi">Deploy and run on a Raspberry Pi</h2>
+                        <ol style="list-style-type: decimal">
+                            <li>Double click on <code class="language-bash">Play Audio File</code> exec node and change the path in the append section to the path of
+                                a <code class="language-bash">.wav</code> file of your choosing. Click <code class="language-bash">Done</code> when finished.</li>
+                            <li>Click the <em>Deploy</em> button.</li>
+                            <li>Trigger the camera.
+                                <ol style="list-style-type: lower-alpha">
+                                    <li>Can manually trigger the snapshot by clicking the <code class="language-bash">Take Photo</code> inject node.<br /></li>
+                                    <li>If using the motion sensor flow, motion near the sensor will trigger the camera.</li>
+                                </ol>
+                            </li>
+                        </ol>
+                        <h2 id="license">License</h2>
+                        <p>Permission is hereby granted, 
+                          free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+                          to deal in the Software without restriction, including without limitation the rights to use, copy, modify, 
+                          merge, publish, distribute, sublicense, and/or sell copies of the Software, 
+                          and to permit persons to whom the Software is furnished to do so
+                           according to the <a href="https://opensource.org/licenses/MIT">MIT License</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- <script src="assets\vendor\jquery\jquery.min.js"></script> -->
+    <!-- <script src="assets\vendor\bootstrap\js\bootstrap.min.js"></script> -->
+    <!-- <script src="assets/vendor/lightgallery/lightgallery.js"></script> -->
+    <!-- <script src="assets/vendor/lightgallery/lightgallery.umd.js"></script> -->
+
+    <script src="../../assets/vendor/prizm/prism.js"></script>
+
+
+    <!-- lightgallery plugins -->
+    <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lightgallery.js/master/dist/js/lightgallery.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lg-pager.js/master/dist/lg-pager.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lg-autoplay.js/master/dist/lg-autoplay.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lg-fullscreen.js/master/dist/lg-fullscreen.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
+    <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
+    <script src="../../assets/vendor/lightgallery/js/components/lg-rotate.min.js"></script>
+
+    <script>
+        // lightGallery(document.getElementById('lightgallery'));
+
+        var buttons = document.getElementsByClassName("image-container");
+        for (var i = 0; i < buttons.length; i++) {
+          console.log(buttons[i])
+          lightGallery(buttons[i]);
+                }
+    </script>
+    
+
+</body>
+
+</html>
